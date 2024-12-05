@@ -1,0 +1,45 @@
+@startuml SQ
+autonumber
+title SD21. Quản lý ghi chú
+actor "Actor" as actor
+boundary "NoteView" as view
+boundary "NoteCreateView" as createView
+control "NoteController" as controller
+entity "NoteRepository" as model
+database "Database" as database
+activate actor
+actor -> view : access to
+deactivate actor
+activate view
+view -> controller : call api GET /list
+activate controller
+controller -> model : inject repository
+activate model
+model -> database : NoteRepository.findAll()
+activate database
+database --> model : return data
+deactivate database
+model --> controller : return list notes
+deactivate model
+controller --> view : return list notes
+deactivate controller
+view -> view: update display
+activate view
+deactivate view
+deactivate view
+opt create note
+ref over actor
+**SD21a. Tạo ghi chú**
+end ref
+end
+opt update note
+ref over actor
+**SD21b. Cập nhật ghi chú**
+end ref
+end
+opt delete note
+ref over actor
+**SD21c. Xóa ghi chú**
+end ref
+end
+@enduml
