@@ -1,9 +1,10 @@
 @startuml SQ
 autonumber
-title SD21. Quản lý ghi chú
+title SD24. Quản lý ghi chú
 actor "Actor" as actor
 boundary "NoteView" as view
 boundary "NoteCreateView" as createView
+control "EncryptionService" as service
 control "NoteController" as controller
 entity "NoteRepository" as model
 database "Database" as database
@@ -20,14 +21,18 @@ activate database
 database --> model : return data
 deactivate database
 model --> controller : return list notes
-deactivate model
+controller -> service : send data
+service --> controller : decrypt and encrypt data
 controller --> view : return list notes
+deactivate model
 deactivate controller
 view -> view: update display
 activate view
 deactivate view
 deactivate view
 opt create note
+frg 
+end
 ref over actor
 **SD21a. Tạo ghi chú**
 end ref
