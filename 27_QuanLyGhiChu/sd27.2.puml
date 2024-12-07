@@ -11,6 +11,7 @@ activate actor
 actor -> view: click update button
 activate view
 view -> create: redirect to
+deactivate view
 activate create
 create -> controller: call api GET /get
 activate controller
@@ -37,17 +38,18 @@ create -> controller: call api PUT /update
 activate controller
 controller -> model: inject repository
 activate model
-model -> database: update date
+model -> database: update data
 activate database
-database --> model: calllback
+database --> model: callback
 deactivate database
 model --> controller: callback
 deactivate model
 controller --> create: callback
 deactivate controller
 create -> create: display success message
-create --> view: redirect to
+create -> view: redirect to
 deactivate create
+activate view
 view -> controller: call api GET /list
 activate controller
 controller -> model: inject repository

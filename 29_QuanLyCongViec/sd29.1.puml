@@ -27,7 +27,7 @@ controller -> model: inject repository
 activate model
 model -> database: create new data
 activate database
-database --> model: calllback
+database --> model: callback
 deactivate database
 model --> controller: callback
 deactivate model
