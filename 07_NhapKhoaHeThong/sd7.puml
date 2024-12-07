@@ -27,7 +27,7 @@ activate controller
 controller --> view: return error message
 deactivate controller
 end
-view --> view: display message
+view -> view: display message
 activate view
 deactivate view
 deactivate view
