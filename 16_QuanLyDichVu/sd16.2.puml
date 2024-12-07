@@ -1,37 +1,50 @@
 @startuml SQ
 autonumber
-title SD16.1. Tạo dịch vụ
+title SD16.2. Sửa dịch vụ
 actor "Actor" as actor
 boundary "ServiceView" as view
-boundary "CreateServiceView" as create
+boundary "UpdateServiceView" as create
 control "ServiceController" as controller
 entity "ServiceRepository" as model
 database "Database" as database
 activate actor
-actor -> view: click create button
+actor -> view: click update button
 activate view
 view -> create: redirect to
 deactivate view
 activate create
-actor -> create: enter input data
+create -> controller: call api GET /get
+activate controller
+controller->model:inject repository
+activate model
+model -> database: find data
+activate database
+database --> model: return data
+deactivate database
+model --> controller: return object
+deactivate model
+controller --> create: return object
+deactivate controller
+create -> create: display data
+actor -> create: edit data
 deactivate actor
 alt enter valid input
-create -> controller: call api POST /create
+create -> controller: call api PUT /update
 activate controller
 controller -> model: inject repository
 activate model
-model -> database: create new data
+model -> database: update data
 activate database
 database --> model: callback
 deactivate database
 model --> controller: callback
 deactivate model
-controller --> create: return message
+controller --> create: callback
 deactivate controller
 create -> create: display success message
 create -> view: redirect to
 deactivate create
-activate view
+activate  view
 view -> controller: call api GET /list
 activate controller
 controller -> model: inject repository
