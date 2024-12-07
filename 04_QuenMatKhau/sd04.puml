@@ -1,0 +1,40 @@
+@startuml SQ
+autonumber
+title SD04. Quên mật khẩu
+actor "Actor" as actor
+boundary "ForgotPassWordView" 
+boundary "VerifyView"
+boundary "LoginView"
+control "AccountController" as controller
+entity "AccountRepository" as model
+database "Database" as database
+
+actor -> ForgotPassWordView : enter email
+alt enter valid email
+ForgotPassWordView -> controller : call api POST /request-forget-password
+controller -> model : inject repository
+model -> database : find by email
+database --> model : return data
+model --> controller : return message
+controller --> ForgotPassWordView : return message
+ForgotPassWordView -> ForgotPassWordView: display message
+
+ForgotPassWordView -> VerifyView : access to
+actor -> VerifyView: enter otp, password, confirm password
+alt enter valid information
+VerifyView -> controller : call api POST /reset-password
+controller -> model : inject repository
+model -> database : find data
+database --> model : return data
+model --> controller : return message
+controller --> VerifyView : return message
+VerifyView -> VerifyView: display message
+VerifyView -> LoginView : access to
+else enter invalid information to verify
+VerifyView -> VerifyView: display error message
+end
+
+else enter invalid email
+ForgotPassWordView -> ForgotPassWordView: display error message
+end
+@enduml
