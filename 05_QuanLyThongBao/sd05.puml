@@ -66,11 +66,11 @@ opt TH3. Người dùng xóa hết thông báo
     actor -> manageView : Click "Delete All"
     manageView -> actor : Confirm "Are you sure you want to delete all notifications?"
     alt User confirms deletion
-        manageView -> controller : Call API DELETE /notifications
+        manageView -> controller : call api DELETE /v1/notification/delete-all
         activate controller
-        controller -> model : Inject repository
+        controller -> model : inject repository
         activate model
-        model -> database : DELETE FROM notifications
+        model -> database : deleteByAccountId()
         activate database
         database --> model : Delete success
         deactivate database

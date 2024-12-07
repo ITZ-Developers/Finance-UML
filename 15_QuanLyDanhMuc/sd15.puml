@@ -8,18 +8,19 @@ entity "CategoryRepository" as model
 database "Database" as database
 
 ' Main Flow
-actor -> manageView : Access "Category Management"
-manageView -> controller : Request list of categories
+actor -> manageView : Access to
+manageView -> controller : call API GET /v1/category/list
 activate controller
-controller -> model : Inject repository
+controller -> model : inject repository
 activate model
-model -> database : SELECT * FROM categories
+model -> database : findAll()
 activate database
-database --> model : Return list of categories
+database --> model : return list of categories
 deactivate database
-model --> controller : Return list
+model --> controller : return list
 deactivate model
-controller --> manageView : Render list of categories
+controller --> manageView : return list of categories
+controller --> manageView : display
 deactivate controller
 
 ' Option TH1: Create Category
