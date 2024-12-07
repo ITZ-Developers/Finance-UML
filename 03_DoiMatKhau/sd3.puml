@@ -1,0 +1,9 @@
+@startuml SQ
+autonumber
+title SD02. Cập nhật hồ sơ
+actor "Actor" as actor
+boundary "ChangePasswordView" as view
+control "AccountController" as controller
+entity "AccountRepository" as model
+database "Database" as database
+@enduml

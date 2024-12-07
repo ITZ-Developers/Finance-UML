@@ -32,6 +32,16 @@ view -> controller : call api PUT /update-profile
 activate controller
 controller -> model : inject repository
 activate model
+model -> database : find data
+activate database
+database --> model : return data
+deactivate database
+model --> controller : return object
+deactivate model
+controller -> controller: check password
+alt confirm password is correct
+controller -> model : inject repository
+activate model
 model -> database : update data
 activate database
 database --> model : callback
@@ -39,7 +49,10 @@ deactivate database
 model --> controller : callback
 deactivate model
 controller --> view : return message
+else confirm password is incorrect
+controller -> view: return error message
 deactivate controller
+end
 view -> view: display message
 else enter invalid input
 view -> view: display error message
