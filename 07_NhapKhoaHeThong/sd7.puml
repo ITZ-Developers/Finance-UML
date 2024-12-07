@@ -5,8 +5,6 @@ actor "Actor" as actor
 boundary "HomeView" as view
 control "AccountController" as controller
 control "KeyService" as service
-entity "AccountRepository" as model
-database "Database" as database
 activate actor
 actor -> view: enter server key
 deactivate actor
