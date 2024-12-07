@@ -6,100 +6,45 @@ boundary "ManageTagView" as manageView
 control "TagController" as controller
 entity "TagRepository" as model
 database "Database" as database
-
 ' Main Flow
+activate actor
 actor -> manageView : Access "Tag Management"
+activate manageView
 manageView -> controller : Request list of tags (default: transactions)
 activate controller
 controller -> model : Inject repository
 activate model
-model -> database : SELECT * FROM tags WHERE type='transaction'
+model -> database : findAll()
 activate database
 database --> model : Return list of tags
 deactivate database
 model --> controller : Return list
 deactivate model
-controller --> manageView : Render list of tags
+controller --> manageView : return list of tags
 deactivate controller
-
+manageView --> manageView : display list of tags
+activate manageView
+deactivate manageView
+deactivate manageView
 ' Option TH1: Add Tag
-opt TH1. Người dùng thêm thẻ
-    actor -> manageView : Click "Create"
-    manageView -> actor : Display create form
-    actor -> manageView : Input tag name, type, and color
-    manageView -> controller : Submit create form
-    activate controller
-    controller -> model : Inject repository
-    model -> database : INSERT INTO tags (name, type, color)
-    activate database
-    database --> model : Insert success
-    deactivate database
-    model --> controller : Notify success
-    deactivate model
-    controller --> manageView : Return success
-    deactivate controller
-    manageView -> actor : Notify "Tag created successfully"
-    manageView -> manageView : Update tag list
+opt **Create Tag**
+  ref over actor
+SD20.1. Thêm thẻ
+end ref
 end
-
-' Option TH2: Edit Tag
-opt TH2. Người dùng chỉnh sửa nhóm giao dịch
-    actor -> manageView : Select a tag to edit
-    manageView -> actor : Display edit form
-    actor -> manageView : Input updated name and color
-    manageView -> controller : Submit edit form
-    activate controller
-    controller -> model : Inject repository
-    model -> database : UPDATE tags SET name=?, color=? WHERE id=?
-    activate database
-    database --> model : Update success
-    deactivate database
-    model --> controller : Notify success
-    deactivate model
-    controller --> manageView : Return success
-    deactivate controller
-    manageView -> actor : Notify "Tag updated successfully"
-    manageView -> manageView : Update tag list
+opt **Edit Tag**
+  ref over actor
+SD20.2. Sửa thẻ
+end ref
 end
-
-' Option TH3: Delete Tag
-opt TH3. Người dùng xóa nhóm thẻ
-    actor -> manageView : Swipe tag to delete
-    manageView -> actor : Confirm deletion
-    alt User confirms
-        manageView -> controller : Call DELETE /tags/{id}
-        activate controller
-        controller -> model : Inject repository
-        model -> database : DELETE FROM tags WHERE id=?
-        activate database
-        database --> model : Delete success
-        deactivate database
-        model --> controller : Notify success
-        deactivate model
-        controller --> manageView : Return success
-        deactivate controller
-        manageView -> manageView : Update tag list
-        manageView -> actor : Notify "Tag deleted successfully"
-    else User cancels
-        manageView -> actor : Cancel delete
-    end
+opt **Delete Tag**
+  ref over actor
+SD20.3. Xóa thẻ
+end ref
 end
-
-' Alternative Flow: Filter Tags
-opt Alternative Flow: Filter Tags
-    actor -> manageView : Select tag type (transaction, service, key, note)
-    manageView -> controller : Request list of tags by type
-    activate controller
-    controller -> model : Inject repository
-    model -> database : SELECT * FROM tags WHERE type=?
-    activate database
-    database --> model : Return filtered list of tags
-    deactivate database
-    model --> controller : Return filtered list
-    deactivate model
-    controller --> manageView : Render filtered list
-    deactivate controller
-    manageView -> actor : Display filtered list of tags
+opt **Alternative Flow: Filter Tags**
+  ref over actor
+SD20.4. Lọc thẻ
+end ref
 end
-
 @enduml

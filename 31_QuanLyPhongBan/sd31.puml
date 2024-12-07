@@ -6,12 +6,14 @@ boundary "ManageDepartmentView" as manageView
 control "DepartmentController" as controller
 entity "DepartmentRepository" as model
 database "Database" as database
-
 ' Main Flow
+activate actor
 actor -> manageView : Access "Manage Department"
+activate manageView
 manageView -> controller : Request department list
 activate controller
 controller -> model : Inject repository
+activate model
 model -> database : SELECT * FROM departments
 activate database
 database --> model : Return department list
@@ -20,78 +22,22 @@ model --> controller : Return list
 deactivate model
 controller --> manageView : Render department list
 deactivate controller
-
 ' Option TH1: Create Department
-opt TH1. Người dùng tạo phòng ban
-    actor -> manageView : Click "Create"
-    manageView -> actor : Display create form
-    actor -> manageView : Input department name and description
-    manageView -> controller : Submit create form
-    activate controller
-    controller -> model : Inject repository
-    model -> database : INSERT INTO departments (name, description)
-    activate database
-    database --> model : Insert success
-    deactivate database
-    model --> controller : Notify success
-    deactivate model
-    controller --> manageView : Return success
-    deactivate controller
-    manageView -> actor : Notify "Department created successfully"
-    manageView -> manageView : Refresh department list
+opt **TH1. Người dùng tạo phòng ban**
+  ref over actor
+SD31.1.Người dùng tạo phòng ban
+end ref
 end
-
 ' Option TH2: Edit Department
-opt TH2. Người dùng chỉnh sửa phòng ban
-    actor -> manageView : Select a department to edit
-    manageView -> controller : Request department details
-    activate controller
-    controller -> model : Inject repository
-    model -> database : SELECT * FROM departments WHERE id=?
-    activate database
-    database --> model : Return department details
-    deactivate database
-    model --> controller : Return details
-    deactivate model
-    controller --> manageView : Render edit form
-    deactivate controller
-    actor -> manageView : Input updated name and description
-    manageView -> controller : Submit edit form
-    activate controller
-    controller -> model : Inject repository
-    model -> database : UPDATE departments SET name=?, description=? WHERE id=?
-    activate database
-    database --> model : Update success
-    deactivate database
-    model --> controller : Notify success
-    deactivate model
-    controller --> manageView : Return success
-    deactivate controller
-    manageView -> actor : Notify "Department updated successfully"
-    manageView -> manageView : Refresh department list
+opt **TH2. Người dùng chỉnh sửa phòng ban**
+  ref over actor
+SD31.2.Người dùng chỉnh sửa phòng ban
+end ref
 end
-
 ' Option TH3: Delete Department
-opt TH3. Người dùng xóa phòng ban
-    actor -> manageView : Swipe to delete a department
-    manageView -> actor : Confirm deletion
-    alt User confirms
-        manageView -> controller : Call DELETE /departments/{id}
-        activate controller
-        controller -> model : Inject repository
-        model -> database : DELETE FROM departments WHERE id=?
-        activate database
-        database --> model : Delete success
-        deactivate database
-        model --> controller : Notify success
-        deactivate model
-        controller --> manageView : Return success
-        deactivate controller
-        manageView -> manageView : Refresh department list
-        manageView -> actor : Notify "Department deleted successfully"
-    else User cancels
-        manageView -> actor : Cancel delete
-    end
+opt **TH3.Người dùng xóa phòng ban**
+  ref over actor
+SD31.3.Người dùng xóa phòng ban
+end ref
 end
-
 @enduml
