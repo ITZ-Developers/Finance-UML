@@ -1,11 +1,11 @@
 @startuml SQ
 autonumber
-title SD28. Phân quyền ghi chú
+title SD14. Phân quyền nhóm giao dịch
 actor "Actor" as actor
-boundary "NoteView" as view
-boundary "NotePermissionView" as permission
-control "ProjectPermissionController" as controller
-entity "ProjectPermissionRepository" as model
+boundary "TransactionView" as view
+boundary "TransactionPermission\nView" as permission
+control "TransactionPermission\nController" as controller
+entity "TransactionPermission\nRepository" as model
 database "Database" as database
 activate actor
 actor -> view: click permission button
@@ -36,12 +36,12 @@ deactivate permission
 end
 group frg [//TH2. Người dùng thêm tài khoản//]
 ref over actor
-SD28.1. Thêm tài khoản
+SD14.1. Thêm tài khoản
 end ref
 end
 group frg [//TH3. Người dùng xóa tài khoản//]
 ref over actor
-SD28.2. Xóa tài khoản
+SD14.2. Xóa tài khoản
 end ref
 end
 @enduml
