@@ -1,0 +1,50 @@
+@startuml SQ
+autonumber
+title SD02. Cập nhật hồ sơ
+actor "Actor" as actor
+boundary "UpdateProfileView" as view
+control "AccountController" as controller
+entity "AccountRepository" as model
+database "Database" as database
+activate actor
+actor -> view : access to
+activate view
+view -> controller : call api GET /profile
+activate controller
+controller -> model : inject repository
+activate model
+model -> database : find data
+activate database
+database --> model : return data
+deactivate database
+model --> controller : return object
+deactivate model
+controller --> view : return object
+deactivate controller
+view -> view: display data
+actor -> view : edit information
+deactivate actor
+ref over actor
+SD08. Tải ảnh lên
+end ref
+alt enter valid input
+view -> controller : call api PUT /update-profile
+activate controller
+controller -> model : inject repository
+activate model
+model -> database : update data
+activate database
+database --> model : callback
+deactivate database
+model --> controller : callback
+deactivate model
+controller --> view : return message
+deactivate controller
+view -> view: display message
+else enter invalid input
+view -> view: display error message
+activate view
+deactivate view
+deactivate view
+end
+@enduml
