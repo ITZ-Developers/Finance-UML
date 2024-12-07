@@ -1,12 +1,11 @@
 @startuml SQ
 autonumber
-title SD29.1. Tạo công việc
+title SD22.1. Tạo key
 actor "Actor" as actor
-boundary "TaskView" as view
-boundary "CreateTaskView" as create
-control "TaskController" as controller
-entity "TaskRepository" as model
-entity "ProjectRepository" as group
+boundary "KeyInformationView" as view
+boundary "CreateKeyInformationView" as create
+control "KeyInformationController" as controller
+entity "KeyInformationRepository" as model
 database "Database" as database
 activate actor
 actor -> view: click create button
@@ -15,6 +14,7 @@ view -> create: redirect to
 deactivate view
 activate create
 actor -> create: enter input data
+deactivate actor
 opt attach documents
 ref over actor
 SD09. Đính kèm tài liệu
@@ -23,15 +23,6 @@ end
 alt enter valid input
 create -> controller: call api POST /create
 activate controller
-controller -> group: inject repository
-activate group
-group -> database: find data
-activate database
-database --> group: return data
-deactivate database
-group --> controller: return object
-deactivate group
-controller -> controller: set relationship
 controller -> model: inject repository
 activate model
 model -> database: create new data

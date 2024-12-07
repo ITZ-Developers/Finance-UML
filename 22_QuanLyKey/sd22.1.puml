@@ -6,6 +6,7 @@ boundary "KeyInformationView" as view
 boundary "CreateKeyInformationView" as create
 control "KeyInformationController" as controller
 entity "KeyInformationRepository" as model
+entity "KeyInformationGroupRepository" as group
 database "Database" as database
 activate actor
 actor -> view: click create button
@@ -23,6 +24,15 @@ end
 alt enter valid input
 create -> controller: call api POST /create
 activate controller
+controller -> group : inject repository
+activate group
+group -> database : find data
+activate database
+database --> group: return data
+deactivate database
+group --> controller : return object
+deactivate group
+controller -> controller: set relationship
 controller -> model: inject repository
 activate model
 model -> database: create new data
