@@ -1,10 +1,10 @@
 @startuml SQ
 autonumber
-title SD22. Quản lý key
+title SD16. Quản lý dịch vụ
 actor "Actor" as actor
-boundary "KeyInformationView" as view
-control "KeyInformationController" as controller
-entity "KeyInformationRepository" as model
+boundary "ServiceView" as view
+control "ServiceController" as controller
+entity "ServiceRepository" as model
 database "Database" as database
 activate actor
 actor -> view : access to
@@ -22,7 +22,7 @@ deactivate model
 controller --> view : return list object
 deactivate controller
 view -> view: display data
-group frg [//TH1. Người dùng tìm kiếm key//]
+group frg [//TH1. Người dùng tìm kiếm dịch vụ//]
 actor -> view : enter search criterias
 deactivate actor
 view -> view: update data display
@@ -30,29 +30,19 @@ activate view
 deactivate view
 deactivate view
 end
-group frg [//TH2. Người dùng tạo key//]
+group frg [//TH2. Người dùng tạo dịch vụ//]
 ref over actor
-SD22.1. Tạo key
+SD22.1. Tạo dịch vụ
 end ref
 end
 group frg [//TH3. Người dùng sửa key//]
 ref over actor
-SD22.2. Sửa key
+SD22.2. Sửa dịch vụ
 end ref
 end
 group frg [//TH4. Người dùng xóa key//]
 ref over actor
-SD22.3. Xóa key
-end ref
-end
-group frg [//TH5. Người dùng xuất tệp Excel//]
-ref over actor
-SD22.4. Xuất tệp Excel
-end ref
-end
-group frg [//TH6. Người dùng giải mã mật khẩu//]
-ref over actor
-SD22.5. Giải mã mật khẩu key
+SD22.3. Xóa dịch vụ
 end ref
 end
 @enduml

@@ -1,6 +1,6 @@
 @startuml SQ
 autonumber
-title SD27.3. Xóa key
+title SD22.3. Xóa key
 actor "Actor" as actor
 boundary "KeyInformationView" as view
 control "KeyInformationController" as controller

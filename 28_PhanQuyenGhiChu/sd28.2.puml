@@ -1,6 +1,6 @@
 @startuml SQ
 autonumber
-title SD28.1. Xóa tài khoản
+title SD28.2. Xóa tài khoản
 actor "Actor" as actor
 boundary "NotePermissionView" as view
 control "ProjectPermissionController" as controller
