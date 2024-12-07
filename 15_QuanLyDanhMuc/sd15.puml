@@ -1,0 +1,88 @@
+@startuml SQ
+autonumber
+title SD15. Quản lý danh mục
+actor "Actor" as actor
+boundary "ManageCategoryView" as manageView
+control "CategoryController" as controller
+entity "CategoryRepository" as model
+database "Database" as database
+
+' Main Flow
+actor -> manageView : Access "Category Management"
+manageView -> controller : Request list of categories
+activate controller
+controller -> model : Inject repository
+activate model
+model -> database : SELECT * FROM categories
+activate database
+database --> model : Return list of categories
+deactivate database
+model --> controller : Return list
+deactivate model
+controller --> manageView : Render list of categories
+deactivate controller
+
+' Option TH1: Create Category
+opt TH1. Người dùng tạo danh mục
+    actor -> manageView : Click "Create"
+    manageView -> actor : Display create form
+    actor -> manageView : Input category name, type, and description
+    manageView -> controller : Submit create form
+    activate controller
+    controller -> model : Inject repository
+    model -> database : INSERT INTO categories (name, type, description)
+    activate database
+    database --> model : Insert success
+    deactivate database
+    model --> controller : Notify success
+    deactivate model
+    controller --> manageView : Return success
+    deactivate controller
+    manageView -> actor : Notify "Category created successfully"
+    manageView -> manageView : Update category list
+end
+
+' Option TH2: Edit Category
+opt TH2. Người dùng chỉnh sửa danh mục
+    actor -> manageView : Select a category
+    manageView -> actor : Display edit form
+    actor -> manageView : Input updated name and description
+    manageView -> controller : Submit edit form
+    activate controller
+    controller -> model : Inject repository
+    model -> database : UPDATE categories SET name=?, description=? WHERE id=?
+    activate database
+    database --> model : Update success
+    deactivate database
+    model --> controller : Notify success
+    deactivate model
+    controller --> manageView : Return success
+    deactivate controller
+    manageView -> actor : Notify "Category updated successfully"
+    manageView -> manageView : Update category list
+end
+
+' Option TH3: Delete Category
+opt TH3. Người dùng xóa danh mục
+    actor -> manageView : Swipe category to delete
+    manageView -> actor : Confirm deletion
+    alt User confirms
+        manageView -> controller : Call DELETE /categories/{id}
+        activate controller
+        controller -> model : Inject repository
+        model -> database : DELETE FROM categories WHERE id=?
+        activate database
+        database --> model : Delete success
+        deactivate database
+        model --> controller : Notify success
+        deactivate model
+        controller --> manageView : Return success
+        deactivate controller
+        manageView -> manageView : Update category list
+        manageView -> actor : Notify "Category deleted successfully"
+    else User cancels
+        manageView -> actor : Cancel delete
+    end
+end
+
+@enduml
