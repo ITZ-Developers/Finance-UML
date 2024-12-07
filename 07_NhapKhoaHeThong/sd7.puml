@@ -1,0 +1,11 @@
+@startuml SQ
+autonumber
+title SD07. Nhập khóa hệ thống
+actor "Actor" as actor
+boundary "ProfileView" as view
+boundary "HomeView" as home
+control "AccountController" as controller
+control "KeyService" as service
+entity "AccountRepository" as model
+database "Database" as database
+@enduml
