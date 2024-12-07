@@ -30,13 +30,11 @@ view -> view: update display
 activate view
 deactivate view
 deactivate view
-opt create note
-frg 
+opt create note 
 end
 ref over actor
 **SD21a. Tạo ghi chú**
 end ref
-end
 opt update note
 ref over actor
 **SD21b. Cập nhật ghi chú**
