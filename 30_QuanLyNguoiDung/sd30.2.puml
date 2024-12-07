@@ -1,11 +1,11 @@
 @startuml SQ
 autonumber
-title SD29.2. Sửa công việc
+title SD30.2. Sửa người dùng
 actor "Actor" as actor
-boundary "TaskView" as view
-boundary "UpdateTaskView" as create
-control "TaskController" as controller
-entity "TaskRepository" as model
+boundary "AccountView" as view
+boundary "UpdateAccountView" as create
+control "AccountController" as controller
+entity "AccountRepository" as model
 database "Database" as database
 activate actor
 actor -> view: click update button
@@ -28,9 +28,9 @@ deactivate controller
 create -> create: display data
 actor -> create: edit data
 deactivate actor
-opt attach documents
+opt upload avatar
 ref over actor
-SD09. Đính kèm tài liệu
+SD08. Tải ảnh lên
 end ref
 end
 alt enter valid input

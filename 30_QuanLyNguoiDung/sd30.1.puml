@@ -1,55 +1,42 @@
 @startuml SQ
 autonumber
-title SD29.2. Sửa công việc
+title SD30.1. Tạo người dùng
 actor "Actor" as actor
-boundary "TaskView" as view
-boundary "UpdateTaskView" as create
-control "TaskController" as controller
-entity "TaskRepository" as model
+boundary "AccountView" as view
+boundary "CreateAccountView" as create
+control "AccountController" as controller
+entity "AccountRepository" as model
 database "Database" as database
 activate actor
-actor -> view: click update button
+actor -> view: click create button
 activate view
 view -> create: redirect to
 deactivate view
 activate create
-create -> controller: call api GET /get
-activate controller
-controller->model:inject repository
-activate model
-model -> database: find data
-activate database
-database --> model: return data
-deactivate database
-model --> controller: return object
-deactivate model
-controller --> create: return object
-deactivate controller
-create -> create: display data
-actor -> create: edit data
+actor -> create: enter input data
 deactivate actor
-opt attach documents
+opt upload avatar
 ref over actor
-SD09. Đính kèm tài liệu
+SD08. Tải ảnh lên
 end ref
 end
 alt enter valid input
-create -> controller: call api PUT /update
+create -> controller: call api POST /create
 activate controller
 controller -> model: inject repository
 activate model
-model -> database: update data
+model -> database: create new data
 activate database
 database --> model: callback
 deactivate database
 model --> controller: callback
 deactivate model
-controller --> create: callback
+controller --> create: return message
 deactivate controller
 create -> create: display success message
 create -> view: redirect to
 deactivate create
-activate  view
+activate view
 view -> controller: call api GET /list
 activate controller
 controller -> model: inject repository

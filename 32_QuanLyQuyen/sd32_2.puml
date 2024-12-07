@@ -1,6 +1,6 @@
 @startuml SQ
 autonumber
-title SD32_2. Sửa quyền
+title SD32.2. Sửa quyền
 actor "Actor" as actor
 boundary "ManageRoleView" as manageView
 control "RoleController" as controller
