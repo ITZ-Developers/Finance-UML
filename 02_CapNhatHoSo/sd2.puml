@@ -13,7 +13,7 @@ view -> controller : call api GET /profile
 activate controller
 controller -> model : inject repository
 activate model
-model -> database : find data
+model -> database : find by current user
 activate database
 database --> model : return data
 deactivate database
@@ -24,15 +24,17 @@ deactivate controller
 view -> view: display data
 actor -> view : edit information
 deactivate actor
+opt upload avatar
 ref over actor
 SD08. Tải ảnh lên
 end ref
+end
 alt enter valid input
 view -> controller : call api PUT /update-profile
 activate controller
 controller -> model : inject repository
 activate model
-model -> database : find data
+model -> database : find current user
 activate database
 database --> model : return data
 deactivate database
