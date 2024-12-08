@@ -2,47 +2,58 @@
 autonumber
 title SD10.1. Tạo giao dịch
 actor "Actor" as actor
-boundary "TransactionView" as view
-boundary "TransactionCreateView" as createView
-control "TransactionController" as controller
-entity "TransactionRepository" as model
+boundary "Transaction\nView" as view
+boundary "CreateTransaction\nView" as create
+control "Transaction\nController" as controller
+entity "Transaction\nRepository" as model
 database "Database" as database
 activate actor
-actor -> view : click create button
+actor -> view: click create button
 activate view
-view -> createView: redirect to create page
-activate createView
-actor -> createView: enter data...
+view -> create: redirect to
+deactivate view
+activate create
+actor -> create: enter input data
 deactivate actor
-createView -> controller : call api POST /create
+opt attach documents
+ref over actor
+SD09. Đính kèm tài liệu
+end ref
+end
+alt enter valid input
+create -> controller: call api POST /create
 activate controller
-controller -> model : inject repository
+controller -> model: inject repository
 activate model
-model -> database : create data
+model -> database: create new data
 activate database
-database --> model : callback
+database --> model: callback
 deactivate database
-model --> controller : callback
+model --> controller: callback
 deactivate model
-controller --> createView : return message
+controller --> create: return message
 deactivate controller
-createView -> createView : display message
-createView -> view : redirect to list page
-deactivate createView
-view -> controller : call api GET /list
+create -> create: display success message
+create -> view: redirect to
+deactivate create
+activate view
+view -> controller: call api GET /list
 activate controller
-controller -> model : inject repository
+controller -> model: inject repository
 activate model
-model -> database : find data
+model -> database: find data
 activate database
-database --> model : return data
+database --> model: return data
 deactivate database
-model --> controller : return list transactions
+model --> controller: return list objects
 deactivate model
-controller --> view : return list transactions
+controller --> view: return list
 deactivate controller
-view -> view: update display
+view -> view: display data
+else enter invalid input
+view -> view: display error message
 activate view
 deactivate view
 deactivate view
+end
 @enduml

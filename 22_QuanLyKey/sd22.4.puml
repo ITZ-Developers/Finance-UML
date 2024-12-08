@@ -12,7 +12,7 @@ actor -> view : click export button
 activate view
 view -> view: open confirmation dialog
 alt click confirm
-view -> controller : call api POST /export
+view -> controller : call api POST /export-excel
 activate controller
 controller -> model : inject repository
 activate model
