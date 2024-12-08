@@ -1,6 +1,6 @@
 @startuml SQ
 autonumber
-title SD31.1 Thêm phòng ban
+title SD31.1. Thêm phòng ban
 actor "Actor" as actor
 boundary "ManageDepartmentView" as manageView
 control "DepartmentController" as controller

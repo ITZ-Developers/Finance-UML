@@ -1,6 +1,6 @@
 @startuml SQ
 autonumber
-title SD20.3 Xóa thẻ
+title SD20.3. Xóa thẻ
 actor "Actor" as actor
 boundary "ManageTagView" as manageView
 control "TagController" as controller

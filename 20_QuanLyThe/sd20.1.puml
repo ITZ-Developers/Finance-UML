@@ -1,6 +1,6 @@
 @startuml SQ
 autonumber
-title SD20.1 Thêm thẻ
+title SD20.1. Thêm thẻ
 actor "Actor" as actor
 boundary "ManageTagView" as manageView
 control "TagController" as controller
