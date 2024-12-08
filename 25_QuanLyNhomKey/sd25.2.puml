@@ -1,6 +1,6 @@
 @startuml SQ
 autonumber
-title SD17.2. Sửa nhóm key
+title SD25.2. Sửa nhóm key
 actor "Actor" as actor
 boundary "KeyInformationGroup\nView" as view
 boundary "UpdateKeyInformationGroup\nView" as create
