@@ -27,15 +27,20 @@ BE -> Database: Connect to Database
 activate Database
 Database --> BE: Return encrypted data
 deactivate Database
-BE -> BE: Decrypt data and **user secret key**\nusing **server secret key**
+BE -> BE: Decrypt **user secret key**\nusing **user public key**
+BE -> BE: Decrypt data using **server secret key**
 BE -> BE: Encrypt data using **user secret key**
 BE --> FE: Return encrypted data
 deactivate BE
 User -> FE: Enter **private key**
 deactivate User
-FE -> BE: Call API GET /profile to get **user secret key**
+FE -> BE: Call API GET /my-key
 activate BE
-BE --> FE: Return user data
+BE-> Database: get current user
+activate Database
+Database --> BE: return **user secret key**
+deactivate Database
+BE --> FE: Return key
 deactivate BE
 FE -> FE: Decrypt **user secret key** using **private key**
 FE -> FE: Decrypt data using decrypted\n**user secret key**
