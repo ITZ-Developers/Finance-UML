@@ -36,11 +36,11 @@ User -> FE: Enter **private key**
 deactivate User
 FE -> BE: Call API GET /my-key
 activate BE
-BE-> Database: get current user
+BE-> Database: Get current user
 activate Database
-Database --> BE: return **user secret key**
+Database --> BE: Return user data
 deactivate Database
-BE --> FE: Return key
+BE --> FE: Return **user secret key**
 deactivate BE
 FE -> FE: Decrypt **user secret key** using **private key**
 FE -> FE: Decrypt data using decrypted\n**user secret key**
